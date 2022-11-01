@@ -1,0 +1,30 @@
+package com.example.jwt.security.handler;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Component
+public class JWTAccessDeniedHandler implements AccessDeniedHandler {
+
+    private ObjectMapper objectMapper;
+
+    public JWTAccessDeniedHandler(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.getWriter().write(objectMapper.writeValueAsString("JWT Authentication Error !"));
+    }
+}
