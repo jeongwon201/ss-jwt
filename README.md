@@ -7,5 +7,5 @@
 > API - JPA
 > Library - java-jwt
 > Database - H2 Database  
-> Build Tool - Maven  
+> Build Tool - Gradle  
 <br />
